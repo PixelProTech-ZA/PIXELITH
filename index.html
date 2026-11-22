@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="PIXELITH">
-<meta name="pixelith-api" content="/api">
+<meta name="pixelith-api" content="https://pixelith.lindokuhlerojasmabika.workers.dev/api">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -95,11 +95,11 @@ button.secondary,.actions a.secondary{background:var(--panel2);border:1px solid 
  <h2>01 / Engine</h2>
  <div class="field"><label for="model">IMAGE MODEL</label>
   <select id="model">
-   <option value="black-forest-labs/FLUX.1-schnell">FLUX.1-schnell</option>
-   <option value="black-forest-labs/FLUX.1-dev">FLUX.1-dev</option>
-   <option value="Qwen/Qwen-Image">Qwen-Image</option>
+   <option value="@cf/black-forest-labs/flux-1-schnell">FLUX.1 schnell · best quality</option>
+   <option value="@cf/bytedance/stable-diffusion-xl-lightning">SDXL Lightning · fastest</option>
+   <option value="@cf/stabilityai/stable-diffusion-xl-base-1.0">SDXL · detailed</option>
   </select>
-  <div class="hint" style="margin-top:6px">Model availability is managed by the PixelProTech engine.</div>
+  <div class="hint" style="margin-top:6px">FLUX ignores size and the negative prompt. SDXL uses both.</div>
  </div>
  <h2 style="margin-top:25px">02 / Composition</h2>
  <div class="field"><label for="prompt">IMAGE PROMPT <span class="hint" id="count">0 / 1500</span></label>
@@ -157,7 +157,7 @@ function errorMessage(err){
  if(err?.name==="AbortError")return "The engine took too long to answer. Try fewer steps or a smaller size.";
  const st=err?.status,msg=err?.message||String(err);
  if(st===401||st===403)return "The engine refused this request.";
- if(st===429)return "Too many requests. Wait a moment and try again.";
+ if(st===429)return msg;
  if(st>=500)return "The engine hit a problem. "+msg;
  if(/failed to fetch|networkerror|load failed/i.test(msg))return "Cannot reach the engine. Check your connection and try again.";
  return msg.length>260?msg.slice(0,260)+"…":msg;
